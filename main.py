@@ -1,17 +1,15 @@
-import discord
 import os
 import math
 import cmath
 import re
 from discord.ext import commands
 from keep_alive import keep_alive
-client = discord.Client()
 
 bot = commands.Bot(command_prefix = '$')
 
 @bot.command()
 async def inputRectangular(ctx, arg1, arg2):
-  pattern = re.compile('\-?[0-9]+')
+  pattern = re.compile('\-?[0-9]+\s+')
   x = re.match(pattern, arg1)
   y = re.match(pattern, arg2)
   if x and y:
@@ -26,7 +24,7 @@ async def inputRectangular(ctx, arg1, arg2):
 
 @bot.command()
 async def inputPol(ctx, arg1, arg2):
-  pattern = re.compile('\-?[0-9]+')
+  pattern = re.compile('\-?[0-9]+\s+')
   x = re.match(pattern, arg1)
   y = re.match(pattern, arg2)
   if x and y:
