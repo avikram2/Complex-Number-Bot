@@ -9,13 +9,28 @@ from discord.ext import commands
 from keep_alive import keep_alive
 bot = commands.Bot(command_prefix = '$')
 
-@bot.command()
-async def inputRectangular(ctx, arg1, arg2):
+
+def numerical_check(arg1, arg2):
+  try:
+    arg1 = float(arg1)
+    arg2 = float(arg2)
+    return True
+  except:
+    return False
+
+def input_verification(arg1, arg2):
   pattern = re.compile('\-?[0-9]+')
   x = re.match(pattern, arg1)
   y = re.match(pattern, arg2)
-  if x and y:
-    if get_mag(arg1, arg2) is not None:
+  return (x and y)
+
+
+@bot.command()
+async def inputRectangular(ctx, arg1, arg2):
+  if input_verification(arg1, arg2):
+    if numerical_check(arg1, arg2):
+      arg1 = float(arg1)
+      arg2 = float(arg2)
       await ctx.send("Magnitude : {}".format(get_mag(arg1, arg2)))
       await ctx.send("Phase(radians) : {}".format(get_phase(arg1, arg2)))
       await ctx.send("Phase(degrees) : {}".format(np.rad2deg(get_phase(arg1, arg2))))
@@ -27,11 +42,10 @@ async def inputRectangular(ctx, arg1, arg2):
 
 @bot.command()
 async def inputPol(ctx, arg1, arg2):
-  pattern = re.compile('\-?[0-9]+')
-  x = re.match(pattern, arg1)
-  y = re.match(pattern, arg2)
-  if x and y:
-    if make_complex(arg1, arg2) is not None:
+  if input_verification(arg1, arg2):
+    if numerical_check(arg1, arg2):
+      arg1 = float(arg1)
+      arg2 = float(arg2)
       await ctx.send("Rect : {}".format(get_rect(arg1, arg2)))
     else:
       await ctx.send("Incorrect format. Send two numbers")
