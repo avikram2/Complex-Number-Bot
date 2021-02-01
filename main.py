@@ -22,9 +22,71 @@ def input_verification(arg1, arg2):
   pattern = re.compile('\-?[0-9]+')
   x = re.match(pattern, arg1)
   y = re.match(pattern, arg2)
-  return (x and y)
+  return x and y
 
 
+def multVerification(arg1, arg2, arg3, arg4):
+  if (input_verification(arg1, arg2) and input_verification(arg3, arg4)):
+    if numerical_check(arg1, arg2) and numerical_check(arg3, arg4):
+      return True
+  return False
+
+def powVerification(arg1, arg2, arg3):
+  if input_verification(arg1, arg2) and numerical_check(arg1, arg2) and numerical_check(arg3, 1):
+    return True
+  return False
+
+
+def make_complex(re, im):
+  re = float(re)
+  im = float(im)
+  return complex(re, im)
+def get_rect(r, phi):
+  r = float(r)
+  phi = float(phi)
+  return cmath.rect(r, phi)
+def get_polar(x):
+  return cmath.polar(x)
+
+@bot.command()
+async def multRect(ctx, arg1, arg2, arg3, arg4):
+  if multVerification(arg1, arg2, arg3, arg4):
+    arg = [arg1, arg2, arg3, arg4]
+    for x in range(len(arg)):
+      arg[x] = float(arg[x])
+    await ctx.send(make_complex(arg[0], arg[1])*make_complex(arg[2], arg[3]))
+  else: 
+    await ctx.send("Invalid")
+
+@bot.command()
+async def powerRect(ctx, arg1, arg2, arg3):
+  if powVerification(arg1, arg2, arg3):
+    new_list = [arg1, arg2, arg3]
+    for x in range(len(new_list)):
+      new_list[x] = float(new_list[x])
+    await ctx.send((make_complex(new_list[0], new_list[1]))**new_list[2])
+  else:
+    await ctx.send("Invalid")
+
+@bot.command()
+async def multPolar(ctx, arg1, arg2, arg3, arg4):
+  if multVerification(arg1, arg2, arg3, arg4):
+    arg = [arg1, arg2, arg3, arg4]
+    for x in range(len(arg)):
+      arg[x] = float(arg[x])
+    await ctx.send(make_complex(arg[0], arg[1])*make_complex(arg[2], arg[3]))
+  else:
+    await ctx.send("Invalid")
+
+@bot.command()
+async def powerPolar(ctx, arg1, arg2, arg3):
+  if powVerification(arg1, arg2, arg3):
+    new_list = [arg1, arg2, arg3]
+    for x in range(len(new_list)):
+      new_list[x] = float(new_list[x])
+    await ctx.send(get_polar((make_complex(new_list[0], new_list[1]))**new_list[2]))
+  else:
+    await ctx.send("Invalid")
 @bot.command()
 async def inputRectangular(ctx, arg1, arg2):
   if input_verification(arg1, arg2):
@@ -52,14 +114,6 @@ async def inputPol(ctx, arg1, arg2):
   else:
     await ctx.send("Incorrect format. Send two numbers")
 
-
-def make_complex(re, im):
-  try:
-    re = float(re)
-    im = float(im)
-  except:
-    return None
-  return complex(re, im)
 def get_mag(re, im):
   try:
     re = float(re)
@@ -79,12 +133,6 @@ def get_phase(re, im):
     return val-math.pi
   else: 
     return -1*val
-def get_polar(x):
-  return cmath.polar(x)
-def get_rect(r, phi):
-  r = float(r)
-  phi = float(phi)
-  return cmath.rect(r, phi)
 
 @bot.event
 async def on_ready():
