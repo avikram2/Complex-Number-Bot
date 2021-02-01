@@ -4,6 +4,7 @@ import cmath
 import re
 #from discord import File
 #from matplotlib import pyplot as plt
+import numpy as np
 from discord.ext import commands
 from keep_alive import keep_alive
 bot = commands.Bot(command_prefix = '$')
@@ -16,8 +17,9 @@ async def inputRectangular(ctx, arg1, arg2):
   if x and y:
     if get_mag(arg1, arg2) is not None:
       await ctx.send("Magnitude : {}".format(get_mag(arg1, arg2)))
-      await ctx.send("Phase : {}".format(get_phase(arg1, arg2)))
-      await ctx.send("Polar: {}".format(get_polar(make_complex(arg1, arg2))))
+      await ctx.send("Phase(radians) : {}".format(get_phase(arg1, arg2)))
+      await ctx.send("Phase(degrees) : {}".format(np.rad2deg(get_phase(arg1, arg2))))
+      await ctx.send("Polar (Radians): {}".format(get_polar(make_complex(arg1, arg2))))
     else:
       await ctx.send("Incorrect format. Send two numbers")
   else:
