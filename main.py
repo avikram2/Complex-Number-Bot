@@ -2,14 +2,15 @@ import os
 import math
 import cmath
 import re
+#from discord import File
+#from matplotlib import pyplot as plt
 from discord.ext import commands
 from keep_alive import keep_alive
-
 bot = commands.Bot(command_prefix = '$')
 
 @bot.command()
 async def inputRectangular(ctx, arg1, arg2):
-  pattern = re.compile('\-?[0-9]+\s+')
+  pattern = re.compile('\-?[0-9]+')
   x = re.match(pattern, arg1)
   y = re.match(pattern, arg2)
   if x and y:
@@ -24,7 +25,7 @@ async def inputRectangular(ctx, arg1, arg2):
 
 @bot.command()
 async def inputPol(ctx, arg1, arg2):
-  pattern = re.compile('\-?[0-9]+\s+')
+  pattern = re.compile('\-?[0-9]+')
   x = re.match(pattern, arg1)
   y = re.match(pattern, arg2)
   if x and y:
@@ -71,9 +72,28 @@ def get_rect(r, phi):
 
 @bot.event
 async def on_ready():
-  print("Logged in as {0.user}".format(client))
+  print("Logged in as {0.user}".format(bot))
   print("Call $inputRectangular or $inputPol to input first and second number")
 
+# @bot.command()
+# async def graphRect(ctx, arg1, arg2):
+#   pattern = re.compile('\-?[0-9]+')
+#   x = re.match(pattern, arg1)
+#   y = re.match(pattern, arg2)
+#   if x and y:
+#     try:
+#       arg1 = float(arg1)
+#       arg2 = float(arg2)
+#     except:
+#       await ctx.send("Error")
+#     await ctx.send("Input is ok")
+#     graph = File('graph.png')
+#     ax = plt.axes()
+#     ax.arrows(0, 0, arg1, arg2)
+#     plt.savefig('graph.png')
+#     await ctx.send(file=graph)
+#   else:
+#     await ctx.send("Incorrect format. Send two numbers")
 
 keep_alive()
 
