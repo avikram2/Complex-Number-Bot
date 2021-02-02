@@ -36,6 +36,10 @@ def powVerification(arg1, arg2, arg3):
     return True
   return False
 
+def make_rect(r, phi):
+  r = float(r)
+  phi = float(phi)
+  return cmath.rect(r, phi)
 
 def make_complex(re, im):
   re = float(re)
@@ -74,7 +78,7 @@ async def multPolar(ctx, arg1, arg2, arg3, arg4):
     arg = [arg1, arg2, arg3, arg4]
     for x in range(len(arg)):
       arg[x] = float(arg[x])
-    await ctx.send(make_complex(arg[0], arg[1])*make_complex(arg[2], arg[3]))
+    await ctx.send(make_rect(arg[0], arg[1])*make_rect(arg[2], arg[3]))
   else:
     await ctx.send("Invalid")
 
@@ -84,7 +88,7 @@ async def powerPolar(ctx, arg1, arg2, arg3):
     new_list = [arg1, arg2, arg3]
     for x in range(len(new_list)):
       new_list[x] = float(new_list[x])
-    await ctx.send(get_polar((make_complex(new_list[0], new_list[1]))**new_list[2]))
+    await ctx.send(get_polar((make_rect(new_list[0], new_list[1]))**new_list[2]))
   else:
     await ctx.send("Invalid")
 @bot.command()
@@ -137,7 +141,7 @@ def get_phase(re, im):
 @bot.event
 async def on_ready():
   print("Logged in as {0.user}".format(bot))
-  print("Call $inputRectangular or $inputPol to input first and second number")
+  print("Read documentation at GitHub repo Readme")
 
 # @bot.command()
 # async def graphRect(ctx, arg1, arg2):
