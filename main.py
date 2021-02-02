@@ -88,7 +88,7 @@ async def powerPolar(ctx, arg1, arg2, arg3):
     new_list = [arg1, arg2, arg3]
     for x in range(len(new_list)):
       new_list[x] = float(new_list[x])
-    await ctx.send(get_polar((make_rect(new_list[0], new_list[1]))**new_list[2]))
+    await ctx.send("r, theta(radians):" + get_polar((make_rect(new_list[0], new_list[1]))**new_list[2]))
   else:
     await ctx.send("Invalid")
 @bot.command()
